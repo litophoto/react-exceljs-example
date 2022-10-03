@@ -5,10 +5,9 @@ import axios from "axios";
 const ExcelOutputSample = () => {
   // const data = {};
   const onExport = async () => {
-    const res = await axios.get(
-      "/sample-v2.xlsx",
-      { responseType: "arraybuffer" }
-    );
+    const res = await axios.get("/sample-v2.xlsx", {
+      responseType: "arraybuffer",
+    });
     const data = new Uint8Array(res.data);
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(data);
@@ -21,7 +20,7 @@ const ExcelOutputSample = () => {
     // 各行のデータ（worksheet.columnsのkeyがオブジェクトのキーと同じになる）
     const worksheet = workbook.getWorksheet("Sheet1");
     worksheet.pageSetup = { orientation: "portrait" };
-    const startRow = 2
+    const startRow = 2;
     let iCount = 0;
     let row = worksheet.getRow(1);
     for (const item of items) {
@@ -33,6 +32,7 @@ const ExcelOutputSample = () => {
       row.getCell(3).value = item.price;
       iCount += 1;
     }
+    worksheet.getRow(0).getCell("ID").value = "番号";
     const uint8Array = await workbook.xlsx.writeBuffer();
     const blob = new Blob([uint8Array], { type: "application/octet-binary" });
     // const download = "output.xlsx";
