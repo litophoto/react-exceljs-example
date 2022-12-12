@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-// import ExcelOutputSample from './excel/OutputSample'
-import ExcelOutputSample from './excel/OutputSampleWithBasicExcel'
+import ExcelExportButton from './xlsx-populate/sample-v2'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      <ExcelOutputSample />
+      <ExcelExportButton />
     </div>
   )
 }
