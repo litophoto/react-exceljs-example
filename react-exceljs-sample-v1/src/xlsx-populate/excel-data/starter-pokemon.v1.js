@@ -1,3 +1,4 @@
+// 変数を用意する代わりに簡易的なモックデータを使う(実際に使う際はデータを"名前の定義"に合わせて変数を対応させる)
 const starterPokemons = {
     "FirstGeneration": {
         "title": "第一世代 御三家",
