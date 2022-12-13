@@ -19,15 +19,24 @@ const downloadWorkbook = async (workbook, fileName) => {
 }
 
 const downloadZippedWorkbook = async (workbooks, folderName) => {
+    // type Workbook = ?
+    // type Workbooks = {
+    //     fileName: string
+    //     workbook: Workbook
+    // }
     const zip = new jszip()
     const zipFolder = zip.folder(folderName)
-    // for (const [workbook, fileName] of workbooks) {
-    //     zipFolder.file(fileName, workbook)
-    // }
-    zipFolder.file(workbooks[0][0], workbooks[0][1])
-    zip.generateAsync({ type: "blob" }).then(
-        blob => saveAs(blob, `${folderName}.zip`)
-    )
+    for (const [fileName, workbook] of workbooks) {
+        const workbookOutput = await workbook.outputAsync()
+        zipFolder.file(fileName, workbookOutput)
+    }
+    // const [fileName, workbook] = workbooks[0]
+    // const workbookOutput = await workbook.outputAsync()
+    // zipFolder.file(fileName, workbookOutput)
+    // zipFolder.file('sample-fileName2.xlsx', workbookOutput)
+    const blob = await zipFolder.generateAsync({ type: "blob" })
+    // zipFolder.file(workbooks[0][0], workbooks[0][1])
+    saveAs(blob, `${folderName}.zip`)
 }
 
 const setDataToWorkbook = async (workbook, jsonMap) => {
